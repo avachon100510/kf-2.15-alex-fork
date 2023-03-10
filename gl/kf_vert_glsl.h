@@ -1,0 +1,20 @@
+/* machine-generated file, do not edit */
+const char *kf_vert_glsl =
+"void main(void) {\n"
+"  switch (gl_VertexID) {\n"
+"  default:\n"
+"  case 0:\n"
+"    gl_Position = vec4(-1.0, -1.0, 0.0, 1.0);\n"
+"    break;\n"
+"  case 1:\n"
+"    gl_Position = vec4( 1.0, -1.0, 0.0, 1.0);\n"
+"    break;\n"
+"  case 2:\n"
+"    gl_Position = vec4(-1.0,  1.0, 0.0, 1.0);\n"
+"    break;\n"
+"  case 3:\n"
+"    gl_Position = vec4( 1.0,  1.0, 0.0, 1.0);\n"
+"    break;\n"
+"  }\n"
+"}\n"
+;

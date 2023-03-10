@@ -1,0 +1,13 @@
+WINPREFIXPLUS ?= $(HOME)/win/win32/i686
+WINPREFIX ?= $(HOME)/win/win32/i686
+SIMD ?= 0
+OPENCL ?= 1
+COMPILE ?= i686-w64-mingw32-g++
+LINK ?= i686-w64-mingw32-g++
+WINDRES ?= i686-w64-mingw32-windres
+WINDRES2 ?= $(WINDRES)
+AR ?= i686-w64-mingw32-ar
+AR2 ?= i686-w64-mingw32-ranlib
+XSLTPROC ?= xsltproc
+RM ?= rm -f
+GCC ?= i686-w64-mingw32-gcc

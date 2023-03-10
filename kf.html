@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head profile="http://www.w3.org/2005/10/profile">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Claude Heiland-Allen" />
+  <meta name="dcterms.date" content="2022-06-28" />
+  <meta name="keywords" content="escape time, fractal, deep zoom, Mandelbrot set, Burning Ship" />
+  <meta name="description" content="Fast deep zooming Free Software for fractal graphics (Mandelbrot, Burning Ship, etc)." />
+  <title>Kalles Fraktaler 2 +</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="kf.css" />
+  <link rel="shortcut icon" href="kf.ico" />
+  <link rel="icon" type="image/png" href="kf.png" />
+</head>
+<body>
+<h1 id='top'><a href='#top'>Kalles Fraktaler 2 +</a></h1>
+<p><a href="#future" title="future">future</a>
+ | <a href="#quick-start" title="quick start">quick start</a>
+ | <a href="#limits" title="limits">limits</a>
+ | <a href="#videos" title="videos">videos</a>
+ | <a href="#download" title="download">download</a>
+ | <a href="#source" title="source">source</a>
+ | <a href="#benchmarks" title="benchmarks">benchmarks</a>
+ | <a href="#gallery" title="gallery">gallery</a>
+ | <a href="manual.html" title="manual">manual</a></p>
+<hr />
+<p>As the orginal <a href='http://www.chillheimer.de/kallesfraktaler/' title='Kalles Fraktaler 2'>upstream</a> author Karl Runmo says:</p>
+<blockquote>Want to create DEEP Mandelbrot fractals 100 times faster than the commercial programs, for FREE? One hour or one minute? Three months or one day? Try Kalles Fraktaler!</blockquote>
+<p>It works by using perturbation techniques and series approximation, to allow faster lower precision number types to be used for pixel iterations, based on a high precision reference.</p>
+<p>I (<a href='/' title='mathr.co.uk'>Claude Heiland-Allen</a>) forked the code and swapped out the custom arbitrary precision floating point code for highly optimized libraries, making it even faster.  Cross-compiled to Windows from Linux MINGW64.  Now with many other enhancements.</p>
+<h2 id='donate'><a href='#donate' title='Donate'>Donate</a></h2>
+<p>You can donate to support my work at <a href='https://ko-fi.com/claudeha' title='ko-fi.com/claudeha'>ko-fi.com/claudeha</a>.</p>
+<h2 id="future"><a href="#future">Future</a></h2>
+<p>Kalles Fraktaler 2 + development is mostly stopped from my side,
+though there may be occasional bug fix releases.  In particular this
+means that the bilinear approximation (BLA) acceleration method, which
+is much better than series approximation (SA) (including NanoMB1 and
+NanoMB2) is unlikely to be implemented in KF any time soon.  The work
+required to implement BLA in KF, with over 100 formulas, is simply too
+great compared to my available time for the project.</p>
+<p>On the plus side, there are some other fractal renderers supporting
+deep zooms with BLA (timings for 16 thread AMD Ryzen 7 2700X CPU running
+Debian Bullseye):</p>
+<dl>
+<dt><a href="https://gbillotey.github.io/Fractalshades-doc">fractalshades</a></dt>
+<dd><blockquote>Fractalshades is a Python package for creating static
+and interactive visualisations of 2d fractals. It targets Windows and
+Unix operating systems and implements efficient algorithms for very-deep
+exploration of the Mandelbrot and the Burning_Ship sets (1.e-2000 scale
+and beyond).</blockquote><p>As an example, it renders a Mandelbrot set
+minibrot at 5e-433 in just over 2 minutes, where the same location takes
+about 20 minutes in the latest KF using NanoMB1.  It also has much more
+flexible colouring options, including stripe colouring and lighting
+effects, but it does not yet support as many formulas as KF.</p></dd>
+<dt><a href="https://sourceforge.net/projects/fractalzoomer/">Fractal Zoomer</a></dt>
+<dd><blockquote>An application that lets you render some of the most
+known fractal functions. It comes with alot of options to further
+enhance your fractal experience! Its easy to use and does not require
+installation. A java version higher than 1.8 is required to be
+installed.</blockquote><p>As an example, it renders the example minibrot
+at 5e-433 in just 30 seconds, once configured to use perturbation / BLA
+and with boundary tracing optimization enabled (without boundary tracing
+enabled it takes just over 2 minutes).</p></dd>
+<dt><a href="mailto:fraktaler@mathr.co.uk">fraktaler-3</a></dt>
+<dd><blockquote>fraktaler-3 is a cross-platform program (Linux, Windows,
+Android, Web) for fast deep zooming of hybrid escape-time 2D fractals.
+It has a graphical explorer using SDL2, OpenGL and Dear ImGUI, and a
+command line version for high resolution images and zoom sequences, with
+export of raw data in EXR format compatible with KF and zoomasm.</blockquote>
+<p>As an example, it also renders the example minibrot at 5e-433 in just
+over 2 minutes.  It also has an
+OpenCL mode which allows using a GPU for acceleration, as well as being
+more efficient even when a CPU is used.  Built in colouring options are
+very limited, and its hybrid formula editor (the only way to define
+formulas) is less flexible than KF's.</p>
+<p>Currently not ready for general use, contact the author if you would
+like to help test early versions.</p></dd>
+<dt>...</dt>
+<dd><p>If you know of any others (whether closed or open source, payware
+or gratis), please let me know so I can add them to this list!</p></dd>
+</dl>
+<p>There is also an experimental
+<a href="https://github.com/smurfix/kf2">cross-platform fork of KF</a>,
+maybe it will add BLA in the future.</p>
+<p>
+<h2 id="quick-start"><a href="#quick-start">Quick Start</a></h2>
+<ul>
+<li><p>Download the latest archive from the website: <a href="#download" class="uri">mathr.co.uk/kf/kf.html#download</a></p></li>
+<li><p>Unzip it wherever you want, no installation required.</p></li>
+<li><p>Launch <code>kf.x86_64.exe</code> for 64-bit (recommended), <code>kf.i686.exe</code> for 32-bit.</p></li>
+<li><p>Start exploring!</p>
+<ul>
+<li><p>Use the mouse scroll wheel to zoom.</p></li>
+<li><p>Choose different fractal formulas in the formula dialog (Ctrl-F).</p></li>
+<li><p>Choose different bailout conditions in the bailout dialog (Ctrl-B).</p></li>
+<li><p>Choose different colours in the colouring dialog (Ctrl-C).</p></li>
+<li><p>Zoom deeper more quickly with Newton-Raphson zooming (Ctrl-D).</p></li>
+<li><p>Design your own hybrid fractal formula (Ctrl-H).</p></li>
+<li><p>Design your own colouring algorithm using GLSL (Ctrl-G).</p></li>
+</ul></li>
+</ul>
+<h2 id='limits'><a href='#limits' title='Limits'>Limits</a></h2>
+<ul>
+<li>Windows limits bitmap images to 2 giga-bytes (~715 M-pixel)</li>
+<li>Windows limits longest bitmap dimension to 64 kilo-pixels</li>
+<li>KF limits iteration count to 9 exa-iterations</li>
+<li>KF limits periods to 2 giga-iterations</li>
+<li>MPFR limits precision to 2 giga-bits (~646 million base-10 digits)</li>
+<li>KF needs up to ~50 bytes per pixel (typically uses half that)</li>
+<li>KF needs up to ~40 bytes per reference iteration (depends on type)</li>
+<li>KF cannot currently make use of more than 64 CPU threads</li>
+</ul>
+<h2 id='videos'><a href='#videos' title='Videos'>Videos</a></h2>
+<h3 id="tutorials"><a href="#tutorials">Tutorials</a></h3>
+<ul>
+<li><p>Wurgo the Making Of with kf-2.15.2 and zoomasm-3.0 : <a href="https://archive.org/details/wurgo-the-making-of" class="uri">https://archive.org/details/wurgo-the-making-of</a> / <a href="https://diode.zone/videos/watch/5dd54244-90b4-423f-aae9-ae6545277c28" class="uri">https://diode.zone/videos/watch/5dd54244-90b4-423f-aae9-ae6545277c28</a></p></li>
+<li><p>Making fractal zoom videos with kf-2.15.1 and zoomasm-1.0 : <a href="https://archive.org/details/making-fractal-zoom-videos-with-kf-2.15-and-zoomasm-1.0" class="uri">https://archive.org/details/making-fractal-zoom-videos-with-kf-2.15-and-zoomasm-1.0</a> / <a href="https://diode.zone/videos/watch/d0b5f2f2-2aef-4405-92e6-4459a96ae93b" class="uri">https://diode.zone/videos/watch/d0b5f2f2-2aef-4405-92e6-4459a96ae93b</a></p></li>
+</ul>
+<h3 id="zoom-videos"><a href="#zoom-videos">Zoom Videos</a></h3>
+<ul>
+<li><p>Legendary Colour Palette : <a href="https://diode.zone/videos/watch/e056656b-2349-403a-8c90-af3dc64c6ef1" class="uri">https://diode.zone/videos/watch/e056656b-2349-403a-8c90-af3dc64c6ef1</a></p></li>
+<li><p>Wurgo : <a href="https://archive.org/details/wurgo" class="uri">https://archive.org/details/wurgo</a> / <a href="https://diode.zone/videos/watch/5dd54244-90b4-423f-aae9-ae6545277c28" class="uri">https://diode.zone/videos/watch/5dd54244-90b4-423f-aae9-ae6545277c28</a></p></li>
+<li><p>Charred Bard : <a href="https://archive.org/details/charred-bard" class="uri">https://archive.org/details/charred-bard</a> / <a href="https://diode.zone/videos/watch/a121d1fb-baeb-45c4-a867-afeadac4f7fd" class="uri">https://diode.zone/videos/watch/a121d1fb-baeb-45c4-a867-afeadac4f7fd</a></p></li>
+<li><p>Special Branch : <a href="https://archive.org/details/special-branch" class="uri">https://archive.org/details/special-branch</a> / <a href="https://diode.zone/videos/watch/786b8320-b5aa-466f-a953-f6f814b59222" class="uri">https://diode.zone/videos/watch/786b8320-b5aa-466f-a953-f6f814b59222</a></p></li>
+<li><p>kf-exp-map-flat-1 : <a href="https://archive.org/details/kf-exp-map-flat-1" class="uri">https://archive.org/details/kf-exp-map-flat-1</a></p></li>
+</ul>
+<h2 id='download'><a href='#download' title='Download'>Download</a></h2>
+<p><span class='noisy'>Legal note</span>: these binaries are released
+under AGPLv3+ license.  If you redistribute the
+binaries (or provide access to the binaries as a service)
+you must also be prepared to distribute the source corresponding to
+those binaries to anyone you distribute the binary to.  To make this easier
+for you, the more recent zips include the source too (though you'll also need
+to get the library sources - check the about dialog ("?" menu) for details).
+And of course insert here the usual legal disclaimers about
+<span class='noisy'>no warranty of any kind</span>.</p>
+<p>Latest binary downloads for Windows (64bit recommended, includes 32bit too)
+which also work in Wine on Linux
+(you need <a href="https://7-zip.org" title="7-zip.org">7-zip</a> to unpack recent releases):</p>
+<ul>
+<li class="latest" id="kf-2.15"><a id="kf-2.15.5.2" href='kf-2.15.5.2.7z' title='kf-2.15.5.2.7z'>kf-2.15.5.2.7z (18M)</a> (<a href='kf-2.15.5.2.7z.sig' title='kf-2.15.5.2.7z.sig'>sig</a>) (2022-06-07) <a href="manual.html#kf-2.15.5.2" title="kf-2.15.5.2 change log">changelog</a></li>
+<li id="kf-2.15.4"><a href='kf-2.15.4.7z' title='kf-2.15.4.7z'>kf-2.15.4.7z (14M)</a> (<a href='kf-2.15.4.7z.sig' title='kf-2.15.4.7z.sig'>sig</a>) (2021-07-22) <a href="manual.html#kf-2.15.4" title="kf-2.15.4 change log">changelog</a></li>
+<li id="kf-2.15.3"><a href='kf-2.15.3.7z' title='kf-2.15.3.7z'>kf-2.15.3.7z (13M)</a> (<a href='kf-2.15.3.7z.sig' title='kf-2.15.3.7z.sig'>sig</a>) (2021-05-26) <a href="manual.html#kf-2.15.3" title="kf-2.15.3 change log">changelog</a></li>
+<li id="kf-2.15.2"><a id="kf-2.15.2.4" href='kf-2.15.2.4.7z' title='kf-2.15.2.4.7z'>kf-2.15.2.4.7z (9.7M)</a> (<a href='kf-2.15.2.4.7z.sig' title='kf-2.15.2.4.7z.sig'>sig</a>) (2021-05-23) <a href="manual.html#kf-2.15.2.4" title="kf-2.15.2.4 change log">changelog</a></li>
+<li id="kf-2.15.1"><a id="kf-2.15.1.6" href='kf-2.15.1.6.7z' title='kf-2.15.1.6.7z'>kf-2.15.1.6.7z (9.4M)</a> (<a href='kf-2.15.1.6.7z.sig' title='kf-2.15.1.6.7z.sig'>sig</a>) (2020-12-08) <a href="manual.html#kf-2.15.1.6" title="kf-2.15.1.6 change log">changelog</a></li>
+<li id="kf-2.14"><a id="kf-2.14.10.7" href='kf-2.14.10.7.7z' title='kf-2.14.10.7.7z'>kf-2.14.10.7.7z (9.3M)</a> (<a href='kf-2.14.10.7.7z.sig' title='kf-2.14.10.7.7z.sig'>sig</a>) (2020-12-08) <a href="manual.html#kf-2.14.10.7" title="kf-2.14.10.7 change log">changelog</a></li>
+<li id="kf-2.13"><a id="kf-2.13.12" href='kf-2.13.12.zip' title='kf-2.13.12.zip'>kf-2.13.12.zip (11M)</a> (<a href='kf-2.13.12.zip.sig' title='kf-2.13.12.zip.sig'>sig</a>) (2019-03-20) <a href="manual.html#kf-2.13.12" title="kf-2.13.12 change log">changelog</a></li>
+<li id="kf-2.12"><a id="kf-2.12.16" href='kf-2.12.16.zip' title='kf-2.12.16.zip'>kf-2.12.16.zip (5.6M)</a> (<a href='kf-2.12.16.zip.sig' title='kf-2.12.16.zip.sig'>sig</a>) (2019-03-20) <a href="manual.html#kf-2.12.16" title="kf-2.12.16 change log">changelog</a></li>
+<li id="kf-2.11"><a href='kf-2.11.1+gmp.20170913.zip' title='kf-2.11.1+gmp.20170913.zip'>kf-2.11.1&#8203;+gmp&#8203;.20170913&#8203;.zip (1.3M)</a> (<a href='kf-2.11.1+gmp.20170913.zip.sig' title='kf-2.11.1+gmp.20170822.zip.sig'>sig</a>) <a href="manual.html#kf-2.11.1+gmp.20170913" title="kf-2.11.1+gmp.20170913 change log">changelog</a></li>
+<li id="kf-2.9"><a href='kf-2.9.3+gmp.20170307.zip' title='kf-2.9.3+gmp.20170307.zip'>kf-2.9.3&#8203;+gmp&#8203;.20170307&#8203;.zip (824K)</a> (<a href='kf-2.9.3+gmp.20170307.zip.sig' title='kf-2.9.3+gmp.20170307.zip.sig'>sig</a>) <a href="manual.html#kf-2.9.3+gmp.20170307" title="kf-2.9.3+gmp.20170307 change log">changelog</a></li>
+</ul>
+<p>Older versions (for example for bisecting bugs) can be downloaded by browsing
+<a href="./" title="mathr.co.uk/kf">mathr.co.uk/kf</a>.  Check the
+<a href="manual.html#change-log" title="change log">change log</a>
+for details of what changed in each version.</p>
+<h2 id='source'><a href='#source' title='Source'>Source code</a></h2>
+<p>The source code is available from my git repository:<p>
+<blockquote><pre>git clone <a href='https://code.mathr.co.uk/kalles-fraktaler-2' title='browse'>https://code.mathr.co.uk/kalles-fraktaler-2.git</a>
+cd kalles-fraktaler-2
+git checkout master       # <em>for Karl's original upstream</em>
+git checkout kf-2.12      # <em>for oldest stable branch</em>
+git checkout kf-2.13      # <em>for older stable branch</em>
+git checkout kf-2.14      # <em>for old stable branch</em>
+git checkout kf-2.15      # <em>for current development</em>
+git tag -l                # <em>list available release tags</em></pre></blockquote>
+<p>Build instructions are in the README.md that accompanies the source code,
+and available online in the manual for
+<a href="manual.html#building-on-linux" title="building on Linux">Linux</a>
+and
+<a href="manual.html#building-on-windows" title="building on Windows">Windows</a>.</p>
+<h2 id='benchmarks'><a href='#benchmarks' title='Benchmarks'>Benchmarks</a></h2>
+<p>I benchmarked with 6 Mandelbrot power 2 locations at various depths,
+testing each of double, scaled double, long double.  Still looking for
+locations to benchmark scaled long double (deeper than 1e4900 or so) and
+floatexp (deeper than 1e9800 or so), and formulae other than power 2
+Mandelbrot.  Please send me locations that you are happy for me to put
+into the repository for benchmarking.</p>
+<p>These results are with a smaller version of the benchmark suite found
+in my git repository: I only tested 'fast' settings (with both settings
+for the Derivatives field for kf-2.13 branch, see D0 and D1 tags), and
+only with an image size of '512x512'.  I tested on two machines,
+one laptop 'latte' (Intel Core 2 Duo P7550) and
+one desktop 'eiskaffee' (AMD Ryzen 7 2700X).</p>
+<p>If you want to contribute results for your machine, let me know and I can
+guide you through the process.</p>
+<h3 id='benchwine'><a href='#benchwine' title='WINE Benchmarks'>WINE Benchmarks</a></h3>
+<p>I don't have Windows, so these benchmarks were run in WINE (the
+performance of kf-2.11.1 is abysmal in WINE because of a single threaded
+wineserver or something along those lines).
+These are all with the 64bit versions.  The timings are real/user/sys, which
+means the elapsed wall-clock time, the total CPU time for all threads, and
+then kernel time for the process.</p>
+<table><tr><th rowspan="2">version</th><th colspan="2">machine</th></tr>
+<tr><th>latte</th><th>eiskaffee</th></tr>
+<tr><th>2.11.1</th><td>36m46 / 24m47 / 11m03</td><td>(not tested yet)</td></tr>
+<tr><th>2.12.13.1</th><td>&nbsp;6m42 / &nbsp;9m52 / &nbsp;0m49</td><td>1m35 / &nbsp;5m44 / 0m04</td></tr>
+<tr><th>2.13.4 D0</th><td>&nbsp;6m55 / 10m17 / &nbsp;0m47</td><td>1m38 / &nbsp;6m30 / 0m05</td></tr>
+<tr><th>2.13.4 D1</th><td>10m25 / 19m22 / &nbsp;0m15</td><td>1m09 / 12m51 / 0m01</td></tr>
+</table>
+<h3 id='benchwin'><a href='#benchwin' title='Windows Benchmarks'>Windows Benchmarks</a></h3>
+<p>TODO.  As I don't have Windows, you sending me benchmark results would be
+especially appreciated.  Also if anyone is using WINE on Mac OS X, if that is
+a thing.</p>
+<h2 id='gallery'><a href='#gallery' title='Gallery'>Gallery</a></h2>
+<p>Here are images of some of the formulas available:</p>
+<div class='gallery'>
+<a href='formula/0-2.kfr' title='Mandelbrot (power 2)'><img src='formula/0-2.png' alt='Mandelbrot (power 2)' /></a>
+<a href='formula/0-3.kfr' title='Mandelbrot (power 3)'><img src='formula/0-3.png' alt='Mandelbrot (power 3)' /></a>
+<a href='formula/0-4.kfr' title='Mandelbrot (power 4)'><img src='formula/0-4.png' alt='Mandelbrot (power 4)' /></a>
+<a href='formula/0-5.kfr' title='Mandelbrot (power 5)'><img src='formula/0-5.png' alt='Mandelbrot (power 5)' /></a>
+<a href='formula/0-6.kfr' title='Mandelbrot (power 6)'><img src='formula/0-6.png' alt='Mandelbrot (power 6)' /></a>
+<a href='formula/0-7.kfr' title='Mandelbrot (power 7)'><img src='formula/0-7.png' alt='Mandelbrot (power 7)' /></a>
+<a href='formula/0-8.kfr' title='Mandelbrot (power 8)'><img src='formula/0-8.png' alt='Mandelbrot (power 8)' /></a>
+<a href='formula/0-9.kfr' title='Mandelbrot (power 9)'><img src='formula/0-9.png' alt='Mandelbrot (power 9)' /></a>
+<a href='formula/0-10.kfr' title='Mandelbrot (power 10)'><img src='formula/0-10.png' alt='Mandelbrot (power 10)' /></a>
+<a href='formula/1-2.kfr' title='Burning Ship (power 2)'><img src='formula/1-2.png' alt='Burning Ship (power 2)' /></a>
+<a href='formula/1-3.kfr' title='Burning Ship (power 3)'><img src='formula/1-3.png' alt='Burning Ship (power 3)' /></a>
+<a href='formula/1-4.kfr' title='Burning Ship (power 4)'><img src='formula/1-4.png' alt='Burning Ship (power 4)' /></a>
+<a href='formula/1-5.kfr' title='Burning Ship (power 5)'><img src='formula/1-5.png' alt='Burning Ship (power 5)' /></a>
+<a href='formula/2-2.kfr' title='Buffalo (power 2)'><img src='formula/2-2.png' alt='Buffalo (power 2)' /></a>
+<a href='formula/2-3.kfr' title='Buffalo (power 3)'><img src='formula/2-3.png' alt='Buffalo (power 3)' /></a>
+<a href='formula/2-4.kfr' title='Buffalo (power 4)'><img src='formula/2-4.png' alt='Buffalo (power 4)' /></a>
+<a href='formula/2-5.kfr' title='Buffalo (power 5)'><img src='formula/2-5.png' alt='Buffalo (power 5)' /></a>
+<a href='formula/3-2.kfr' title='Celtic (power 2)'><img src='formula/3-2.png' alt='Celtic (power 2)' /></a>
+<a href='formula/3-3.kfr' title='Celtic (power 3)'><img src='formula/3-3.png' alt='Celtic (power 3)' /></a>
+<a href='formula/3-4.kfr' title='Celtic (power 4)'><img src='formula/3-4.png' alt='Celtic (power 4)' /></a>
+<a href='formula/3-5.kfr' title='Celtic (power 5)'><img src='formula/3-5.png' alt='Celtic (power 5)' /></a>
+<a href='formula/4-2.kfr' title='Mandelbar (power 2)'><img src='formula/4-2.png' alt='Mandelbar (power 2)' /></a>
+<a href='formula/4-3.kfr' title='Mandelbar (power 3)'><img src='formula/4-3.png' alt='Mandelbar (power 3)' /></a>
+<a href='formula/4-4.kfr' title='Mandelbar (power 4)'><img src='formula/4-4.png' alt='Mandelbar (power 4)' /></a>
+<a href='formula/4-5.kfr' title='Mandelbar (power 5)'><img src='formula/4-5.png' alt='Mandelbar (power 5)' /></a>
+<a href='formula/5-2.kfr' title='Mandelbar Celtic (power 2)'><img src='formula/5-2.png' alt='Mandelbar Celtic (power 2)' /></a>
+<a href='formula/6-2.kfr' title='Perpendicular Mandelbrot (power 2)'><img src='formula/6-2.png' alt='Perpendicular Mandelbrot (power 2)' /></a>
+<a href='formula/7-2.kfr' title='Perpendicular Burning Ship (power 2)'><img src='formula/7-2.png' alt='Perpendicular Burning Ship (power 2)' /></a>
+<a href='formula/8-2.kfr' title='Perpendicular Celtic (power 2)'><img src='formula/8-2.png' alt='Perpendicular Celtic (power 2)' /></a>
+<a href='formula/9-2.kfr' title='Perpendicular Buffalo (power 2)'><img src='formula/9-2.png' alt='Perpendicular Buffalo (power 2)' /></a>
+<a href='formula/10-3.kfr' title='Cubic Quasi Burning Ship (power 3)'><img src='formula/10-3.png' alt='Cubic Quasi Burning Ship (power 3)' /></a>
+<a href='formula/11-3.kfr' title='Cubic Partial BS Real (power 3)'><img src='formula/11-3.png' alt='Cubic Partial BS Real (power 3)' /></a>
+<a href='formula/12-3.kfr' title='Cubic Partial BS Imag (power 3)'><img src='formula/12-3.png' alt='Cubic Partial BS Imag (power 3)' /></a>
+<a href='formula/13-3.kfr' title='Cubic Flying Squirrel (Buffalo Imag) (power 3)'><img src='formula/13-3.png' alt='Cubic Flying Squirrel (Buffalo Imag) (power 3)' /></a>
+<a href='formula/14-3.kfr' title='Cubic Quasi Perpendicular (power 3)'><img src='formula/14-3.png' alt='Cubic Quasi Perpendicular (power 3)' /></a>
+<a href='formula/15-4.kfr' title='4th Burning Ship Partial Imag (power 4)'><img src='formula/15-4.png' alt='4th Burning Ship Partial Imag (power 4)' /></a>
+<a href='formula/16-4.kfr' title='4th Burning Ship Partial Real (power 4)'><img src='formula/16-4.png' alt='4th Burning Ship Partial Real (power 4)' /></a>
+<a href='formula/17-4.kfr' title='4th Burning Ship Partial Real Mbar (power 4)'><img src='formula/17-4.png' alt='4th Burning Ship Partial Real Mbar (power 4)' /></a>
+<a href='formula/18-4.kfr' title='4th Celtic Burning Ship Partial Imag (power 4)'><img src='formula/18-4.png' alt='4th Celtic Burning Ship Partial Imag (power 4)' /></a>
+<a href='formula/19-4.kfr' title='4th Celtic Burning Ship Partial Real (power 4)'><img src='formula/19-4.png' alt='4th Celtic Burning Ship Partial Real (power 4)' /></a>
+<a href='formula/20-4.kfr' title='4th Celtic Burning Ship Partial Real Mbar (power 4)'><img src='formula/20-4.png' alt='4th Celtic Burning Ship Partial Real Mbar (power 4)' /></a>
+<a href='formula/21-4.kfr' title='4th Buffalo Partial Imag (power 4)'><img src='formula/21-4.png' alt='4th Buffalo Partial Imag (power 4)' /></a>
+<a href='formula/22-4.kfr' title='4th Celtic Mbar (power 4)'><img src='formula/22-4.png' alt='4th Celtic Mbar (power 4)' /></a>
+<a href='formula/23-4.kfr' title='4th False Quasi Perpendicular (power 4)'><img src='formula/23-4.png' alt='4th False Quasi Perpendicular (power 4)' /></a>
+<a href='formula/24-4.kfr' title='4th False Quasi Heart (power 4)'><img src='formula/24-4.png' alt='4th False Quasi Heart (power 4)' /></a>
+<a href='formula/25-4.kfr' title='4th Celtic False Quasi Perpendicular (power 4)'><img src='formula/25-4.png' alt='4th Celtic False Quasi Perpendicular (power 4)' /></a>
+<a href='formula/26-4.kfr' title='4th Celtic False Quasi Heart (power 4)'><img src='formula/26-4.png' alt='4th Celtic False Quasi Heart (power 4)' /></a>
+<a href='formula/27-5.kfr' title='5th Burning Ship Partial (power 5)'><img src='formula/27-5.png' alt='5th Burning Ship Partial (power 5)' /></a>
+<a href='formula/28-5.kfr' title='5th Burning Ship Partial Mbar (power 5)'><img src='formula/28-5.png' alt='5th Burning Ship Partial Mbar (power 5)' /></a>
+<a href='formula/29-5.kfr' title='5th Celtic Mbar (power 5)'><img src='formula/29-5.png' alt='5th Celtic Mbar (power 5)' /></a>
+<a href='formula/30-5.kfr' title='5th Quasi Burning Ship (BS/Buffalo Hybrid) (power 5)'><img src='formula/30-5.png' alt='5th Quasi Burning Ship (BS/Buffalo Hybrid) (power 5)' /></a>
+<a href='formula/31-5.kfr' title='5th Quasi Perpendicular (power 5)'><img src='formula/31-5.png' alt='5th Quasi Perpendicular (power 5)' /></a>
+<a href='formula/32-5.kfr' title='5th Quasi Heart (power 5)'><img src='formula/32-5.png' alt='5th Quasi Heart (power 5)' /></a>
+<a href='formula/33-4.kfr' title='SimonBrot 4th (power 4)'><img src='formula/33-4.png' alt='SimonBrot 4th (power 4)' /></a>
+<a href='formula/34-4.kfr' title='4th Imag Quasi Perpendicular / Heart (power 4)'><img src='formula/34-4.png' alt='4th Imag Quasi Perpendicular / Heart (power 4)' /></a>
+<a href='formula/35-4.kfr' title='4th Real Quasi Perpendicular (power 4)'><img src='formula/35-4.png' alt='4th Real Quasi Perpendicular (power 4)' /></a>
+<a href='formula/36-4.kfr' title='4th Real Quasi Heart (power 4)'><img src='formula/36-4.png' alt='4th Real Quasi Heart (power 4)' /></a>
+<a href='formula/37-4.kfr' title='4th Celtic Imag Quasi Perpendicular / Heart (power 4)'><img src='formula/37-4.png' alt='4th Celtic Imag Quasi Perpendicular / Heart (power 4)' /></a>
+<a href='formula/38-4.kfr' title='4th Celtic Real Quasi Perpendicular (power 4)'><img src='formula/38-4.png' alt='4th Celtic Real Quasi Perpendicular (power 4)' /></a>
+<a href='formula/39-4.kfr' title='4th Celtic Real Quasi Heart (power 4)'><img src='formula/39-4.png' alt='4th Celtic Real Quasi Heart (power 4)' /></a>
+<a href='formula/40-6.kfr' title='SimonBrot 6th (power 6)'><img src='formula/40-6.png' alt='SimonBrot 6th (power 6)' /></a>
+<a href='formula/41-2.kfr' title='HPDZ Buffalo (power 2)'><img src='formula/41-2.png' alt='HPDZ Buffalo (power 2)' /></a>
+<a href='formula/42-3.kfr' title='TheRedshiftRider 1: a*z^2+z^3+c (power 3)'><img src='formula/42-3.png' alt='TheRedshiftRider 1: a*z^2+z^3+c (power 3)' /></a>
+<a href='formula/43-3.kfr' title='TheRedshiftRider 2: a*z^2-z^3+c (power 3)'><img src='formula/43-3.png' alt='TheRedshiftRider 2: a*z^2-z^3+c (power 3)' /></a>
+<a href='formula/44-3.kfr' title='TheRedshiftRider 3: 2*z^2-z^3+c (power 3)'><img src='formula/44-3.png' alt='TheRedshiftRider 3: 2*z^2-z^3+c (power 3)' /></a>
+<a href='formula/45-4.kfr' title='TheRedshiftRider 4: a*z^2+z^4+c (power 4)'><img src='formula/45-4.png' alt='TheRedshiftRider 4: a*z^2+z^4+c (power 4)' /></a>
+<a href='formula/46-4.kfr' title='TheRedshiftRider 5: a*z^2-z^4+c (power 4)'><img src='formula/46-4.png' alt='TheRedshiftRider 5: a*z^2-z^4+c (power 4)' /></a>
+<a href='formula/47-5.kfr' title='TheRedshiftRider 6: a*z^2+z^5+c (power 5)'><img src='formula/47-5.png' alt='TheRedshiftRider 6: a*z^2+z^5+c (power 5)' /></a>
+<a href='formula/48-5.kfr' title='TheRedshiftRider 7: a*z^2-z^5+c (power 5)'><img src='formula/48-5.png' alt='TheRedshiftRider 7: a*z^2-z^5+c (power 5)' /></a>
+<a href='formula/49-6.kfr' title='TheRedshiftRider 8: a*z^2+z^6+c (power 6)'><img src='formula/49-6.png' alt='TheRedshiftRider 8: a*z^2+z^6+c (power 6)' /></a>
+<a href='formula/50-6.kfr' title='TheRedshiftRider 9: a*z^2-z^6+c (power 6)'><img src='formula/50-6.png' alt='TheRedshiftRider 9: a*z^2-z^6+c (power 6)' /></a>
+<a href='formula/51-4.kfr' title='SimonBrot2 4th (power 4)'><img src='formula/51-4.png' alt='SimonBrot2 4th (power 4)' /></a>
+</div>
+<hr style='clear:both'>
+<p>(<a href='#top'>back to top</a>)</p>
+</body>
+</html>
