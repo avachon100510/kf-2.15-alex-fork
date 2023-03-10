@@ -1,0 +1,37 @@
+<formula type="2" name="Buffalo" power="4" glitch="0.00001">
+  <reference t="R">
+    Xrn = abs(Xr2 * Xr2 + Xi2 * (Xi2 - 6 * Xr2)) + Cr;
+    Xin = abs(4 * Xr * Xi * (Xr2 - Xi2)) + Ci;
+  </reference>
+  <perturbation t="R">
+    t_0 = 4 * Xr * xr;
+    t_1 = 4 * Xi * xi;
+    t_2 = 4 * Xr * xi;
+    t_3 = 4 * Xi * xr;
+    t_4 = 4 * xr * xi;
+    t_5 = 12 * Xr * Xi;
+    t_6 = 3 * t_3;
+    t_7 = 3 * t_2;
+    t_8 = 3 * t_4;
+    t_9 = t_3 + t_7;
+    t_10 = t_2 + t_6;
+    t_11 = t_5 + t_4;
+    t_12 = 3 * t_1;
+    t_13 = 3 * t_0;
+    t_14 = 6 * (xr2 - xi2);
+    t_15 = t_0 - t_12;
+    t_16 = t_1 - t_13;
+    xrn = diffabs(Xr2 * Xr2 + Xi2 * (Xi2 - 6 * Xr2), Xr2 * (t_15 + t_14) + Xi2 * (t_16 - t_14) + xr2 * (t_15 + xr2 - 6 * xi2) + xi2 * (t_16 + xi2) - 3 * t_0 * t_1 / 2) + cr;
+    xin = diffabs(4 * Xr * Xi * (Xr2 - Xi2), Xr2 * (t_10 + t_8) - Xi2 * (t_9 + t_8) + xr2 * (t_9 + t_11) - xi2 * (t_10 + t_11)) + ci;
+  </perturbation>
+  <derivative t="M">
+    t_0 = 4 * sgn(Xxr2 * Xxr2 + Xxi2 * Xxi2 - 6 * Xxr2 * Xxi2);
+    t_1 = 4 * sgn(Xxr * Xxi * (Xxr2 - Xxi2));
+    t_2 = Xxr * (Xxr2 - 3 * Xxi2);
+    t_3 = Xxi * (3 * Xxr2 - Xxi2);
+    dxan = t_0 * (t_2 * dxa - t_3 * dya) + daa;
+    dxbn = t_0 * (t_2 * dxb - t_3 * dyb) + dab;
+    dyan = t_1 * (t_3 * dxa + t_2 * dya) + dba;
+    dybn = t_1 * (t_3 * dxb + t_2 * dyb) + dbb;
+  </derivative>
+</formula>

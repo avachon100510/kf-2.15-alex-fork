@@ -1,0 +1,24 @@
+<formula type="1" name="Burning Ship" power="3" glitch="0.0000001">
+  <reference t="R">
+    Xrn = (Xr2 - 3 * Xi2) * abs(Xr) + Cr;
+    Xin = (3 * Xr2 - Xi2) * abs(Xi) + Ci;
+  </reference>
+  <perturbation t="R">
+    t_0 = Xr * xr;
+    t_1 = Xi * xi;
+    xrn = (Xr2 - 3 * Xi2) * diffabs(Xr, xr) + (2 * t_0 + xr2 - 6 * t_1 - 3 * xi2) * abs(Xxr) + cr;
+    xin = (3 * Xr2 - Xi2) * diffabs(Xi, xi) + (6 * t_0 + 3 * xr2 - 2 * t_1 - xi2) * abs(Xxi) + ci;
+  </perturbation>
+  <derivative t="M">
+    t_0 = Xxi * Xxr;
+    t_1 = Xxr2 - Xxi2;
+    t_2 = (3 * sgn(Xxr)) * t_1;
+    t_3 = (-6 * sgn(Xxr)) * t_0;
+    t_4 = (3 * sgn(Xxi)) * t_1;
+    t_5 = (6 * sgn(Xxi)) * t_0;
+    dxan = t_2 * dxa + t_3 * dya + daa;
+    dxbn = t_2 * dxb + t_3 * dyb + dab;
+    dyan = t_4 * dya + t_5 * dxa + dba;
+    dybn = t_4 * dyb + t_5 * dxb + dbb;
+  </derivative>
+</formula>

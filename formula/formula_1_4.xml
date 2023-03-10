@@ -1,0 +1,26 @@
+<formula type="1" name="Burning Ship" power="4" glitch="0.00001">
+  <reference t="R">
+    Xrn = Xr2 * Xr2 + Xi2 * Xi2 - 6 * Xr2 * Xi2 + Cr;
+    Xin = 4 * abs(Xr * Xi) * (Xr2 - Xi2) + Ci;
+  </reference>
+  <perturbation t="R">
+    t_0 = Xr * xr;
+    t_1 = Xi * xi;
+    t_2 = xr2 - xi2;
+    xrn = Xr2 * (4 * t_0 + 6 * t_2 - 12 * t_1) + Xi2 * (4 * t_1 - 6 * t_2 - 12 * t_0) + xr2 * (4 * t_0 + xr2 - 12 * t_1) + xi2 * (4 * t_1 + xi2 - 12 * t_0 - 6 * xr2) - 24 * t_0 * t_1 + cr;
+    xin = 4 * (Xr2 - Xi2) * diffabs(Xr * Xi, Xr * xi + xr * Xxi) + 4 * abs(Xxr * Xxi) * ((2 * t_0 + xr2) - (2 * t_1 + xi2)) + ci;
+  </perturbation>
+  <derivative t='M'>
+    t_0 = Xxr * Xxr2;
+    t_1 = Xxi * Xxr2;
+    t_2 = Xxr * Xxi2;
+    t_3 = Xxi * Xxi2;
+    t_4 = (t_0 - 3 * t_2);
+    t_5 = (t_3 - 3 * t_1);
+    t_6 = 4 * sgn(Xxi) * sgn(Xxr);
+    dxan = 4 * (t_4 * dxa + t_5 * dya) + daa;
+    dxbn = 4 * (t_4 * dxb + t_5 * dyb) + dab;
+    dyan = t_6 * (t_4 * dya - t_5 * dxa) + dba;
+    dybn = t_6 * (t_4 * dyb - t_5 * dxb) + dbb;
+  </derivative>
+</formula>

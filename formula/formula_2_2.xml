@@ -1,0 +1,18 @@
+<formula type="2" name="Buffalo" power="2" glitch="0.0000001">
+  <reference t="R">
+    Xrn = abs(Xr2 - Xi2) + Cr;
+    Xin = 2 * abs(Xr * Xi) + Ci;
+  </reference>
+  <perturbation t="R">
+    xrn = diffabs(Xr2 - Xi2, (2 * Xr + xr) * xr - (2 * Xi + xi) * xi) + cr;
+    xin = 2 * diffabs(Xr * Xi, Xr * xi + xr * Xxi) + ci;
+  </perturbation>
+  <derivative t="M">
+    t_0 = 2 * sgn(Xxr2 - Xxi2);
+    t_1 = 2 * sgn(Xxi) * sgn(Xxr);
+    dxan = t_0 * (Xxr * dxa - Xxi * dya) + daa;
+    dxbn = t_0 * (Xxr * dxb - Xxi * dyb) + dab;
+    dyan = t_1 * (Xxi * dxa + Xxr * dya) + dba;
+    dybn = t_1 * (Xxi * dxb + Xxr * dyb) + dbb;
+  </derivative>
+</formula>
