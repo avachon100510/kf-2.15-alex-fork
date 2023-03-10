@@ -342,10 +342,7 @@
 <group type="102" name="Householder Nova Mandelbrot (z^p - 1)" convergent="1">
   <formula power="3" />
 </group>
-<group type="103" name="Magnet Mandelbrot Type I" convergent="1">
-  <formula power="2" />
-</group>
-<group type="104" name="Lambda Mandelbrot">
+<group type="103" name="Lambda Mandelbrot 1">
   <formula power="2" />
 </group>
 </formulas>

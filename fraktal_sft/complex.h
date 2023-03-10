@@ -68,7 +68,7 @@ public:
 	}
 	inline complex operator -(const int &a) const noexcept
 	{
-		return complex<tt>(m_r - tt(a), m_i);
+		return complex<tt>(m_r - a, m_i);
 	}
 	inline complex operator +(const complex &a) const noexcept
 	{
@@ -76,7 +76,7 @@ public:
 	}
 	inline complex operator -(const complex &a) const noexcept
 	{
-		return complex<tt>(m_r - tt(a.m_r), m_i - tt(a.m_i));
+		return complex<tt>(m_r - a.m_r, m_i - a.m_i);
 	}
 	inline complex &operator +=(const complex &a) noexcept
 	{

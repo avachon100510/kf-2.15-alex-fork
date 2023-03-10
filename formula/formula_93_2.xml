@@ -1,0 +1,12 @@
+<formula type="93" name="Cosbrot" power="2" glitch="0.0001">
+  <!-- FIXME not really divergent -->
+  <reference t="C">
+    Xn = cos(X) + C;
+  </reference>
+  <perturbation t="C">
+    xn = c - 2 * sin(x / 2) * sin(X + (x / 2));
+  </perturbation>
+  <derivative t="C">
+    dn = d0 - d * sin(Xx);
+  </derivative>
+</formula>

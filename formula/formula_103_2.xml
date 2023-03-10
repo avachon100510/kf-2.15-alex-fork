@@ -1,0 +1,11 @@
+<formula type="103" name="Lambda Mandelbrot 1" power="2" glitch="1e-6">
+  <reference t="C">
+    Xn = C*X*(1 - X);
+  </reference>
+  <perturbation t="C">
+    xn = (-(c*(x^2)+C*(x^2)+2*X*c*x-c*x+2*C*X*x-C*x+(X^2)*c-X*c));
+  </perturbation>
+  <derivative t="C">
+    dn = d*d0*(1 - Xx) - d0*Xx;
+  </derivative>
+</formula>

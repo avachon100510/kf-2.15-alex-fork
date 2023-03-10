@@ -146,17 +146,7 @@ public:
 		return (long double)(FixedFloat(f * pow(FixedFloat(10), nScaling)));
 	};
 	inline explicit operator long double () const { return ToLongDouble(); }
-        inline float ToFloat(int nScaling = 0) const
-	{
-		using std::pow;
-		unsigned p = LOW_PRECISION;
-		Precision q(p);
-		FixedFloat f;
-		f.precision(p);
-		f = m_f;
-		return float(FixedFloat(f * pow(FixedFloat(10), nScaling)));
-	};
-	inline explicit operator float () const { return ToFloat(); }
+
 	inline CFixedFloat Add(const CFixedFloat &A) const
 	{
 		Precision p(std::max(m_f.precision(), A.m_f.precision()));

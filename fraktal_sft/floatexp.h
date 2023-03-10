@@ -705,7 +705,7 @@ inline tfloatexp<mantissa, exponent> expm1(tfloatexp<mantissa, exponent> a) noex
 	using std::expm1;
 	using std::ldexp;
   if (a.exp <= -120) return a; // FIXME threshold depends on number type
-  if (8 <= a.exp) return exp(a) - tfloatexp<mantissa, exponent>(1.0);
+  if (8 <= a.exp) return exp(a) - 1;
   return tfloatexp<mantissa, exponent>(expm1(ldexp(a.val, a.exp)));
 }
 
